@@ -3,1063 +3,873 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Deepak Ray — ERP Integration & AI/ML Engineer</title>
+<title>Deepak Ray — ERP & AI/ML Engineer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Figtree:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --ink: #0f0f0f;
-    --ink-muted: #5a5a5a;
-    --ink-light: #9a9a9a;
-    --surface: #fafaf8;
-    --surface-2: #f2f1ee;
-    --surface-3: #e8e7e3;
-    --accent: #1a6b4a;
-    --accent-light: #e8f2ed;
-    --accent-warm: #c4621a;
-    --line: #e2e1dd;
-    --white: #ffffff;
-    --font-display: 'DM Serif Display', Georgia, serif;
-    --font-body: 'DM Sans', system-ui, sans-serif;
-    --max: 1100px;
-    --radius: 4px;
-  }
+:root {
+  --bg: #f5f4f0;
+  --card: #ffffff;
+  --ink: #141414;
+  --ink-2: #4a4a4a;
+  --ink-3: #8a8a8a;
+  --green: #1a5c3e;
+  --green-light: #eaf3ee;
+  --green-mid: #2d7a54;
+  --amber: #b85c00;
+  --amber-light: #fdf0e6;
+  --line: #e4e3de;
+  --shadow: 0 2px 12px rgba(0,0,0,0.07);
+  --shadow-lg: 0 12px 48px rgba(0,0,0,0.14);
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Figtree', system-ui, sans-serif;
+  --r: 12px;
+}
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; font-size: 15px; }
 
-  html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
 
-  body {
-    font-family: var(--font-body);
-    background: var(--surface);
-    color: var(--ink);
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-  }
+/* ── LAYOUT ── */
+.app {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  grid-template-rows: 100vh;
+  height: 100vh;
+}
 
-  /* ── NAV ── */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    background: rgba(250,250,248,0.92);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--line);
-    padding: 0 2rem;
-    height: 60px;
-    display: flex; align-items: center; justify-content: space-between;
-  }
-  .nav-logo {
-    font-family: var(--font-display);
-    font-size: 1.15rem;
-    color: var(--ink);
-    text-decoration: none;
-    letter-spacing: -0.01em;
-  }
-  .nav-links {
-    display: flex; gap: 2rem; list-style: none;
-  }
-  .nav-links a {
-    font-size: 0.82rem;
-    font-weight: 500;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--ink-muted);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-  .nav-links a:hover { color: var(--accent); }
+/* ── SIDEBAR ── */
+.sidebar {
+  background: var(--green);
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 1.5rem;
+  overflow-y: auto;
+  position: relative;
+}
+.sidebar::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 120px;
+  background: linear-gradient(to top, rgba(0,0,0,0.15), transparent);
+  pointer-events: none;
+}
 
-  /* ── HERO ── */
-  .hero {
-    padding: 140px 2rem 100px;
-    max-width: var(--max);
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: center;
-  }
-  .hero-eyebrow {
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    font-size: 0.78rem; font-weight: 500; letter-spacing: 0.1em;
-    text-transform: uppercase; color: var(--accent);
-    margin-bottom: 1.2rem;
-  }
-  .hero-eyebrow::before {
-    content: ''; display: block; width: 28px; height: 1px;
-    background: var(--accent);
-  }
-  .hero h1 {
-    font-family: var(--font-display);
-    font-size: clamp(2.8rem, 5vw, 4rem);
-    line-height: 1.1;
-    letter-spacing: -0.02em;
-    color: var(--ink);
-    margin-bottom: 1.4rem;
-  }
-  .hero h1 em {
-    font-style: italic;
-    color: var(--accent);
-  }
-  .hero-desc {
-    font-size: 1.05rem;
-    color: var(--ink-muted);
-    line-height: 1.75;
-    max-width: 480px;
-    margin-bottom: 2rem;
-  }
-  .hero-cta {
-    display: flex; gap: 1rem; flex-wrap: wrap;
-  }
-  .btn {
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    padding: 0.75rem 1.5rem;
-    font-family: var(--font-body);
-    font-size: 0.85rem;
-    font-weight: 500;
-    letter-spacing: 0.02em;
-    border-radius: var(--radius);
-    text-decoration: none;
-    transition: all 0.2s;
-    cursor: pointer;
-  }
-  .btn-primary {
-    background: var(--accent);
-    color: var(--white);
-    border: 1.5px solid var(--accent);
-  }
-  .btn-primary:hover {
-    background: #155c3f;
-    border-color: #155c3f;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 16px rgba(26,107,74,0.25);
-  }
-  .btn-outline {
-    background: transparent;
-    color: var(--ink);
-    border: 1.5px solid var(--line);
-  }
-  .btn-outline:hover {
-    border-color: var(--ink);
-    transform: translateY(-1px);
-  }
-  .hero-stats {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-  }
-  .stat-card {
-    background: var(--white);
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    padding: 1.5rem;
-    transition: box-shadow 0.2s;
-  }
-  .stat-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.07); }
-  .stat-number {
-    font-family: var(--font-display);
-    font-size: 2.4rem;
-    color: var(--ink);
-    line-height: 1;
-    margin-bottom: 0.3rem;
-  }
-  .stat-label {
-    font-size: 0.8rem;
-    font-weight: 500;
-    color: var(--ink-muted);
-    letter-spacing: 0.04em;
-  }
-  .stat-card.accent-card {
-    background: var(--accent);
-    border-color: var(--accent);
-  }
-  .stat-card.accent-card .stat-number,
-  .stat-card.accent-card .stat-label { color: var(--white); }
+.profile-photo {
+  width: 84px; height: 84px;
+  border-radius: 50%;
+  border: 2.5px dashed rgba(255,255,255,0.35);
+  background: rgba(255,255,255,0.08);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: 1.2rem;
+  overflow: hidden;
+  position: relative;
+  flex-shrink: 0;
+}
+.profile-photo:hover { border-color: rgba(255,255,255,0.7); background: rgba(255,255,255,0.14); }
+.profile-photo img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; border-radius: 50%; }
+.photo-hint { font-size: 0.65rem; color: rgba(255,255,255,0.45); text-align: center; line-height: 1.3; margin-top: 0.2rem; }
+.photo-hint span { font-size: 1.2rem; display: block; margin-bottom: 0.15rem; }
+#photo-input { display: none; }
 
-  /* ── SECTION WRAPPER ── */
-  section { padding: 80px 2rem; }
-  .container { max-width: var(--max); margin: 0 auto; }
-  .section-label {
-    font-size: 0.75rem; font-weight: 600;
-    letter-spacing: 0.12em; text-transform: uppercase;
-    color: var(--accent); margin-bottom: 0.6rem;
-  }
-  .section-title {
-    font-family: var(--font-display);
-    font-size: clamp(1.8rem, 3vw, 2.5rem);
-    letter-spacing: -0.02em;
-    line-height: 1.15;
-    margin-bottom: 1rem;
-  }
-  .section-desc {
-    color: var(--ink-muted);
-    font-size: 1rem;
-    max-width: 560px;
-    line-height: 1.7;
-    margin-bottom: 3rem;
-  }
-  .divider { width: 100%; height: 1px; background: var(--line); }
+.sidebar-name {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 400;
+  color: #ffffff;
+  line-height: 1.2;
+  margin-bottom: 0.3rem;
+}
+.sidebar-title {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.6);
+  font-weight: 400;
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+}
+.sidebar-location {
+  display: flex; align-items: center; gap: 0.4rem;
+  font-size: 0.72rem; color: rgba(255,255,255,0.5);
+  margin-bottom: 2rem;
+}
+.sidebar-location::before { content: '📍'; font-size: 0.75rem; }
 
-  /* ── ABOUT ── */
-  #about { background: var(--white); }
-  .about-grid {
-    display: grid;
-    grid-template-columns: 1.1fr 0.9fr;
-    gap: 5rem;
-    align-items: start;
-  }
-  .about-text p {
-    color: var(--ink-muted);
-    line-height: 1.8;
-    margin-bottom: 1rem;
-    font-size: 1.02rem;
-  }
-  .about-text p strong { color: var(--ink); font-weight: 500; }
-  .about-highlights {
-    display: flex; flex-direction: column; gap: 1rem;
-  }
-  .highlight-item {
-    display: flex; gap: 1rem;
-    padding: 1.2rem;
-    background: var(--surface);
-    border-radius: 8px;
-    border: 1px solid var(--line);
-    transition: border-color 0.2s;
-  }
-  .highlight-item:hover { border-color: var(--accent); }
-  .highlight-icon {
-    width: 40px; height: 40px; flex-shrink: 0;
-    background: var(--accent-light);
-    border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.1rem;
-  }
-  .highlight-text h4 { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.2rem; }
-  .highlight-text p { font-size: 0.83rem; color: var(--ink-muted); line-height: 1.5; }
+.sidebar-divider {
+  width: 100%; height: 1px;
+  background: rgba(255,255,255,0.12);
+  margin-bottom: 1.5rem;
+}
 
-  /* ── SKILLS ── */
-  #skills { background: var(--surface); }
-  .skills-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-  }
-  .skill-group {
-    background: var(--white);
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    padding: 1.5rem;
-    transition: box-shadow 0.2s;
-  }
-  .skill-group:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
-  .skill-group-title {
-    font-size: 0.78rem; font-weight: 600;
-    letter-spacing: 0.08em; text-transform: uppercase;
-    color: var(--accent); margin-bottom: 1rem;
-    display: flex; align-items: center; gap: 0.5rem;
-  }
-  .skill-group-title::after {
-    content: ''; flex: 1; height: 1px; background: var(--accent-light);
-  }
-  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-  .tag {
-    display: inline-block;
-    padding: 0.3rem 0.7rem;
-    font-size: 0.78rem; font-weight: 500;
-    background: var(--surface-2);
-    border: 1px solid var(--line);
-    border-radius: 4px;
-    color: var(--ink-muted);
-    transition: all 0.15s;
-  }
-  .tag:hover, .tag.hot {
-    background: var(--accent-light);
-    border-color: var(--accent);
-    color: var(--accent);
-  }
+.stat-row {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 0.7rem;
+  margin-bottom: 2rem;
+}
+.mini-stat {
+  background: rgba(255,255,255,0.08);
+  border-radius: 8px;
+  padding: 0.8rem 0.7rem;
+  text-align: center;
+}
+.mini-stat-num {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: #ffffff;
+  line-height: 1;
+}
+.mini-stat-label {
+  font-size: 0.62rem;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.3;
+  margin-top: 0.2rem;
+}
 
-  /* ── ARTICLES ── */
-  #articles { background: var(--white); }
-  .articles-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
-  }
-  .article-card {
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    padding: 1.8rem;
-    background: var(--surface);
-    transition: all 0.22s;
-    text-decoration: none;
-    color: inherit;
-    display: flex; flex-direction: column; gap: 0.8rem;
-    position: relative;
-    overflow: hidden;
-  }
-  .article-card::before {
-    content: ''; position: absolute;
-    top: 0; left: 0; right: 0; height: 3px;
-    background: var(--accent);
-    transform: scaleX(0); transform-origin: left;
-    transition: transform 0.3s;
-  }
-  .article-card:hover::before { transform: scaleX(1); }
-  .article-card:hover {
-    box-shadow: 0 8px 32px rgba(0,0,0,0.09);
-    transform: translateY(-2px);
-    border-color: transparent;
-  }
-  .article-meta {
-    display: flex; align-items: center; gap: 0.8rem;
-    font-size: 0.76rem; color: var(--ink-light);
-    font-weight: 500; letter-spacing: 0.03em;
-  }
-  .article-chip {
-    display: inline-block;
-    padding: 0.2rem 0.6rem;
-    background: var(--accent-light);
-    color: var(--accent);
-    border-radius: 3px;
-    font-size: 0.72rem; font-weight: 600;
-    letter-spacing: 0.06em; text-transform: uppercase;
-  }
-  .article-card h3 {
-    font-family: var(--font-display);
-    font-size: 1.2rem;
-    letter-spacing: -0.01em;
-    line-height: 1.35;
-    color: var(--ink);
-  }
-  .article-card p {
-    font-size: 0.88rem;
-    color: var(--ink-muted);
-    line-height: 1.65;
-  }
-  .article-arrow {
-    margin-top: auto;
-    font-size: 0.8rem; font-weight: 600;
-    color: var(--accent);
-    display: flex; align-items: center; gap: 0.3rem;
-  }
-  .article-arrow svg { transition: transform 0.2s; }
-  .article-card:hover .article-arrow svg { transform: translateX(4px); }
+.sidebar-section-label {
+  font-size: 0.63rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  margin-bottom: 0.7rem;
+}
 
-  /* ── AI JOURNEY ── */
-  #aiml { background: var(--ink); color: var(--white); }
-  #aiml .section-label { color: #6bc49e; }
-  #aiml .section-title { color: var(--white); }
-  #aiml .section-desc { color: rgba(255,255,255,0.55); }
-  .journey-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: rgba(255,255,255,0.1);
-    border-radius: 10px;
-    overflow: hidden;
-    margin-bottom: 3rem;
-  }
-  .journey-card {
-    background: #161616;
-    padding: 2rem;
-    transition: background 0.2s;
-  }
-  .journey-card:hover { background: #1c1c1c; }
-  .journey-phase {
-    font-size: 0.72rem; font-weight: 600;
-    letter-spacing: 0.1em; text-transform: uppercase;
-    color: #6bc49e; margin-bottom: 0.8rem;
-  }
-  .journey-card h3 {
-    font-family: var(--font-display);
-    font-size: 1.15rem;
-    color: var(--white);
-    margin-bottom: 0.6rem;
-    line-height: 1.3;
-  }
-  .journey-card p {
-    font-size: 0.84rem;
-    color: rgba(255,255,255,0.5);
-    line-height: 1.6;
-  }
-  .journey-status {
-    display: inline-block;
-    padding: 0.15rem 0.6rem;
-    border-radius: 20px;
-    font-size: 0.7rem; font-weight: 600;
-    letter-spacing: 0.05em; text-transform: uppercase;
-    margin-top: 0.8rem;
-  }
-  .status-done { background: rgba(107,196,158,0.15); color: #6bc49e; }
-  .status-active { background: rgba(196,98,26,0.2); color: #e07a3a; }
-  .status-next { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.4); }
+.cert-list { list-style: none; display: flex; flex-direction: column; gap: 0.45rem; margin-bottom: 1.8rem; }
+.cert-list li {
+  font-size: 0.73rem;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.4;
+  padding-left: 1rem;
+  position: relative;
+}
+.cert-list li::before { content: '✓'; position: absolute; left: 0; color: #6dbf96; font-weight: 700; }
 
-  .stack-pills {
-    display: flex; flex-wrap: wrap; gap: 0.6rem;
-  }
-  .stack-pill {
-    padding: 0.4rem 0.9rem;
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 20px;
-    font-size: 0.8rem; color: rgba(255,255,255,0.7);
-    transition: all 0.15s;
-  }
-  .stack-pill:hover {
-    background: rgba(107,196,158,0.12);
-    border-color: rgba(107,196,158,0.4);
-    color: #6bc49e;
-  }
+.sidebar-links { display: flex; flex-direction: column; gap: 0.5rem; }
+.sidebar-link {
+  display: flex; align-items: center; gap: 0.6rem;
+  padding: 0.6rem 0.8rem;
+  background: rgba(255,255,255,0.07);
+  border-radius: 7px;
+  text-decoration: none;
+  color: rgba(255,255,255,0.75);
+  font-size: 0.78rem;
+  font-weight: 500;
+  transition: all 0.15s;
+}
+.sidebar-link:hover { background: rgba(255,255,255,0.15); color: #fff; }
+.sidebar-link svg { flex-shrink: 0; }
 
-  /* ── EXPERIENCE ── */
-  #experience { background: var(--surface); }
-  .exp-timeline { display: flex; flex-direction: column; gap: 0; }
-  .exp-item {
-    display: grid;
-    grid-template-columns: 180px 1fr;
-    gap: 2rem;
-    padding: 2.5rem 0;
-    border-bottom: 1px solid var(--line);
-    position: relative;
-  }
-  .exp-item:last-child { border-bottom: none; }
-  .exp-date {
-    font-size: 0.82rem;
-    color: var(--ink-light);
-    font-weight: 500;
-    padding-top: 0.2rem;
-    line-height: 1.5;
-  }
-  .exp-company {
-    font-size: 0.78rem;
-    font-weight: 600;
-    color: var(--accent);
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    margin-top: 0.3rem;
-  }
-  .exp-content h3 {
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    color: var(--ink);
-  }
-  .exp-content p {
-    font-size: 0.9rem;
-    color: var(--ink-muted);
-    line-height: 1.7;
-    margin-bottom: 0.8rem;
-  }
-  .exp-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-  .exp-tag {
-    font-size: 0.75rem; font-weight: 500;
-    padding: 0.2rem 0.6rem;
-    background: var(--surface-2);
-    border: 1px solid var(--line);
-    border-radius: 3px;
-    color: var(--ink-muted);
-  }
+/* ── MAIN ── */
+.main {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
 
-  /* ── CONTACT ── */
-  #contact { background: var(--white); }
-  .contact-grid {
-    display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
-    gap: 4rem;
-    align-items: start;
-  }
-  .contact-intro {
-    font-size: 1.05rem;
-    color: var(--ink-muted);
-    line-height: 1.75;
-    margin-bottom: 2rem;
-  }
-  .contact-links { display: flex; flex-direction: column; gap: 1rem; }
-  .contact-link {
-    display: flex; align-items: center; gap: 1rem;
-    padding: 1.1rem 1.3rem;
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    text-decoration: none;
-    color: var(--ink);
-    font-size: 0.9rem; font-weight: 500;
-    transition: all 0.2s;
-  }
-  .contact-link:hover {
-    border-color: var(--accent);
-    background: var(--accent-light);
-    color: var(--accent);
-    transform: translateX(4px);
-  }
-  .contact-link-icon {
-    width: 36px; height: 36px;
-    background: var(--white);
-    border-radius: 6px;
-    border: 1px solid var(--line);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1rem; flex-shrink: 0;
-  }
-  .contact-detail {
-    display: flex; flex-direction: column; gap: 1.5rem;
-  }
-  .detail-block h4 {
-    font-size: 0.78rem; font-weight: 600;
-    letter-spacing: 0.08em; text-transform: uppercase;
-    color: var(--ink-light); margin-bottom: 0.4rem;
-  }
-  .detail-block p {
-    font-size: 0.9rem; color: var(--ink-muted);
-  }
-  .certifications { display: flex; flex-direction: column; gap: 0.5rem; }
-  .cert-item {
-    display: flex; align-items: center; gap: 0.5rem;
-    font-size: 0.82rem; color: var(--ink-muted);
-  }
-  .cert-item::before {
-    content: '✓'; color: var(--accent);
-    font-weight: 700; font-size: 0.75rem;
-  }
+/* ── TOP BAR ── */
+.topbar {
+  height: 56px;
+  border-bottom: 1px solid var(--line);
+  background: var(--card);
+  display: flex; align-items: center;
+  padding: 0 1.8rem;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+.topbar-greeting {
+  font-size: 0.82rem;
+  color: var(--ink-3);
+  margin-right: auto;
+}
+.topbar-greeting strong { color: var(--ink); font-weight: 600; }
+.topbar-chip {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.72rem; font-weight: 600;
+  letter-spacing: 0.03em;
+}
+.chip-green { background: var(--green-light); color: var(--green); }
+.chip-amber { background: var(--amber-light); color: var(--amber); }
+.chip-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
 
-  /* ── FOOTER ── */
-  footer {
-    background: var(--ink);
-    color: rgba(255,255,255,0.4);
-    padding: 2rem;
-    text-align: center;
-    font-size: 0.8rem;
-  }
-  footer a { color: rgba(255,255,255,0.6); text-decoration: none; }
+/* ── DASHBOARD GRID ── */
+.dashboard {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.5rem 1.8rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto auto auto;
+  gap: 1rem;
+  align-content: start;
+}
 
-  /* ── PHOTO PLACEHOLDER ── */
-  .photo-wrapper {
-    display: flex; justify-content: center;
-    margin-bottom: 2rem;
-  }
-  .photo-circle {
-    width: 160px; height: 160px;
-    border-radius: 50%;
-    border: 3px dashed var(--line);
-    background: var(--surface-2);
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    gap: 0.4rem;
-    cursor: pointer;
-    transition: all 0.2s;
-    position: relative;
-    overflow: hidden;
-  }
-  .photo-circle:hover {
-    border-color: var(--accent);
-    background: var(--accent-light);
-  }
-  .photo-circle img {
-    width: 100%; height: 100%;
-    object-fit: cover;
-    position: absolute; inset: 0;
-    border-radius: 50%;
-  }
-  .photo-placeholder-text {
-    font-size: 0.72rem; font-weight: 500;
-    color: var(--ink-light); text-align: center;
-    line-height: 1.4; z-index: 1;
-  }
-  .photo-icon { font-size: 1.6rem; z-index: 1; }
-  #photo-input { display: none; }
+/* ── CARDS ── */
+.card {
+  background: var(--card);
+  border-radius: var(--r);
+  border: 1px solid var(--line);
+  padding: 1.4rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+  border-color: transparent;
+}
+.card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--green);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s;
+}
+.card:hover::after { transform: scaleX(1); }
 
-  /* ── ANIMATIONS ── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  .hero-text { animation: fadeUp 0.7s ease both; }
-  .hero-visual { animation: fadeUp 0.7s 0.15s ease both; }
+/* card spans */
+.card-wide { grid-column: span 2; }
+.card-tall { grid-row: span 2; }
 
-  /* ── RESPONSIVE ── */
-  @media (max-width: 900px) {
-    .hero { grid-template-columns: 1fr; gap: 3rem; padding-top: 110px; }
-    .hero-stats { grid-template-columns: repeat(4, 1fr); }
-    .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-    .skills-grid { grid-template-columns: repeat(2, 1fr); }
-    .articles-grid { grid-template-columns: 1fr; }
-    .journey-grid { grid-template-columns: 1fr; }
-    .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
-    .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-  }
-  @media (max-width: 600px) {
-    nav { padding: 0 1rem; }
-    .nav-links { gap: 1.2rem; }
-    .nav-links a { font-size: 0.75rem; }
-    section { padding: 60px 1.2rem; }
-    .hero { padding: 100px 1.2rem 60px; }
-    .hero-stats { grid-template-columns: repeat(2, 1fr); }
-    .skills-grid { grid-template-columns: 1fr; }
-  }
+.card-label {
+  font-size: 0.63rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--ink-3); margin-bottom: 0.5rem;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.card-label-icon { font-size: 0.9rem; }
+.card-title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: var(--ink);
+  line-height: 1.3;
+  margin-bottom: 0.5rem;
+}
+.card-body {
+  font-size: 0.8rem;
+  color: var(--ink-2);
+  line-height: 1.6;
+}
+.card-cta {
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  font-size: 0.72rem; font-weight: 600;
+  color: var(--green);
+  margin-top: 0.9rem;
+}
+.card-cta svg { transition: transform 0.2s; }
+.card:hover .card-cta svg { transform: translateX(3px); }
+
+/* about card */
+.about-card { background: var(--ink); border-color: var(--ink); cursor: default; }
+.about-card::after { display: none; }
+.about-card .card-label { color: rgba(255,255,255,0.35); }
+.about-card .card-title { color: #fff; font-size: 1.3rem; }
+.about-card .card-body { color: rgba(255,255,255,0.6); font-size: 0.82rem; }
+
+/* skill pills inline */
+.inline-pills { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.7rem; }
+.pill {
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+  font-size: 0.7rem; font-weight: 500;
+  background: var(--green-light);
+  color: var(--green);
+  border: 1px solid rgba(26,92,62,0.15);
+}
+.pill-amber { background: var(--amber-light); color: var(--amber); border-color: rgba(184,92,0,0.15); }
+.pill-grey { background: #f0eeea; color: var(--ink-2); border-color: var(--line); }
+
+/* progress bar */
+.progress-row { display: flex; flex-direction: column; gap: 0.6rem; margin-top: 0.8rem; }
+.progress-item {}
+.progress-header { display: flex; justify-content: space-between; margin-bottom: 0.25rem; }
+.progress-name { font-size: 0.75rem; font-weight: 500; color: var(--ink-2); }
+.progress-pct { font-size: 0.7rem; color: var(--ink-3); }
+.progress-bar { height: 5px; background: #ede9e3; border-radius: 3px; overflow: hidden; }
+.progress-fill { height: 100%; border-radius: 3px; background: var(--green); }
+.progress-fill.amber { background: var(--amber); }
+
+/* articles preview */
+.article-list { display: flex; flex-direction: column; gap: 0.7rem; margin-top: 0.6rem; }
+.article-row {
+  display: flex; gap: 0.7rem; align-items: flex-start;
+  padding: 0.6rem;
+  border-radius: 7px;
+  background: var(--bg);
+  border: 1px solid transparent;
+  transition: border-color 0.15s;
+}
+.article-row:hover { border-color: var(--line); }
+.article-row-chip {
+  flex-shrink: 0;
+  padding: 0.15rem 0.45rem;
+  border-radius: 3px;
+  font-size: 0.6rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  background: var(--green-light); color: var(--green);
+  margin-top: 0.1rem;
+}
+.article-row-title { font-size: 0.78rem; font-weight: 500; color: var(--ink); line-height: 1.4; }
+.article-row-date { font-size: 0.68rem; color: var(--ink-3); margin-top: 0.15rem; }
+
+/* journey phases */
+.phase-list { display: flex; flex-direction: column; gap: 0.55rem; margin-top: 0.7rem; }
+.phase-item {
+  display: flex; align-items: flex-start; gap: 0.7rem;
+  padding: 0.65rem 0.7rem;
+  border-radius: 7px;
+  background: var(--bg);
+}
+.phase-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  flex-shrink: 0; margin-top: 0.2rem;
+}
+.dot-done { background: var(--green); }
+.dot-active { background: var(--amber); box-shadow: 0 0 0 3px rgba(184,92,0,0.15); }
+.dot-next { background: #d0cec9; }
+.phase-name { font-size: 0.77rem; font-weight: 500; color: var(--ink); }
+.phase-sub { font-size: 0.7rem; color: var(--ink-3); margin-top: 0.05rem; }
+
+/* exp preview */
+.exp-list { display: flex; flex-direction: column; gap: 0.6rem; margin-top: 0.7rem; }
+.exp-row { display: flex; gap: 0.8rem; align-items: flex-start; }
+.exp-dot-col { display: flex; flex-direction: column; align-items: center; padding-top: 0.3rem; }
+.exp-circle { width: 8px; height: 8px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
+.exp-line { width: 1px; flex: 1; background: var(--line); margin-top: 3px; min-height: 20px; }
+.exp-row-company { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--green); }
+.exp-row-role { font-size: 0.78rem; font-weight: 500; color: var(--ink); }
+.exp-row-date { font-size: 0.68rem; color: var(--ink-3); }
+
+/* ── MODAL ── */
+.overlay {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(10,10,10,0.5);
+  backdrop-filter: blur(4px);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.2s;
+  padding: 1.5rem;
+}
+.overlay.open { opacity: 1; pointer-events: all; }
+
+.modal {
+  background: var(--card);
+  border-radius: 16px;
+  width: 100%; max-width: 700px;
+  max-height: 86vh;
+  overflow-y: auto;
+  transform: translateY(20px) scale(0.98);
+  transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1);
+  box-shadow: 0 24px 80px rgba(0,0,0,0.25);
+}
+.overlay.open .modal { transform: translateY(0) scale(1); }
+
+.modal-header {
+  padding: 1.5rem 1.8rem 1rem;
+  border-bottom: 1px solid var(--line);
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem;
+  position: sticky; top: 0; background: var(--card); z-index: 1;
+  border-radius: 16px 16px 0 0;
+}
+.modal-header-text {}
+.modal-eyebrow { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); margin-bottom: 0.3rem; }
+.modal-title { font-family: var(--font-display); font-size: 1.5rem; font-weight: 400; color: var(--ink); line-height: 1.25; }
+.modal-close {
+  width: 32px; height: 32px; border-radius: 50%;
+  border: 1px solid var(--line); background: var(--bg);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: 1rem; color: var(--ink-2);
+  flex-shrink: 0; transition: all 0.15s;
+}
+.modal-close:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+.modal-body { padding: 1.5rem 1.8rem 2rem; }
+.modal-body p { font-size: 0.9rem; color: var(--ink-2); line-height: 1.75; margin-bottom: 1rem; }
+.modal-body p strong { color: var(--ink); font-weight: 600; }
+.modal-body h3 { font-family: var(--font-display); font-size: 1.05rem; color: var(--ink); margin: 1.3rem 0 0.5rem; }
+.modal-body ul { padding-left: 1.2rem; display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1rem; }
+.modal-body ul li { font-size: 0.87rem; color: var(--ink-2); line-height: 1.6; }
+
+.modal-skill-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin: 1rem 0; }
+.modal-skill-block {}
+.modal-skill-block h4 { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--green); margin-bottom: 0.5rem; }
+.modal-pills { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+
+.modal-article {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 1.1rem;
+  margin-bottom: 0.8rem;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  transition: all 0.18s;
+}
+.modal-article:hover { border-color: var(--green); background: var(--green-light); }
+.modal-article-date { font-size: 0.7rem; color: var(--ink-3); margin-bottom: 0.3rem; }
+.modal-article-title { font-family: var(--font-display); font-size: 1rem; color: var(--ink); margin-bottom: 0.4rem; line-height: 1.35; }
+.modal-article-desc { font-size: 0.82rem; color: var(--ink-2); line-height: 1.6; }
+
+.modal-exp-item { padding: 1.1rem 0; border-bottom: 1px solid var(--line); }
+.modal-exp-item:last-child { border-bottom: none; }
+.modal-exp-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.4rem; }
+.modal-exp-role { font-size: 0.95rem; font-weight: 600; color: var(--ink); }
+.modal-exp-co { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--green); }
+.modal-exp-date { font-size: 0.75rem; color: var(--ink-3); text-align: right; }
+.modal-exp-desc { font-size: 0.84rem; color: var(--ink-2); line-height: 1.65; margin-bottom: 0.6rem; }
+
+.modal-journey-card {
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  padding: 1rem;
+  margin-bottom: 0.7rem;
+  display: flex; gap: 1rem; align-items: flex-start;
+}
+.modal-journey-left { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.modal-journey-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+.modal-journey-line { width: 1px; background: var(--line); flex: 1; min-height: 30px; }
+.modal-journey-right {}
+.modal-journey-phase { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--green); margin-bottom: 0.25rem; }
+.modal-journey-title { font-size: 0.92rem; font-weight: 600; color: var(--ink); margin-bottom: 0.3rem; }
+.modal-journey-desc { font-size: 0.82rem; color: var(--ink-2); line-height: 1.6; }
+.modal-journey-badge {
+  display: inline-block;
+  padding: 0.15rem 0.55rem;
+  border-radius: 20px;
+  font-size: 0.67rem; font-weight: 600;
+  margin-top: 0.5rem;
+}
+.badge-done { background: var(--green-light); color: var(--green); }
+.badge-active { background: var(--amber-light); color: var(--amber); }
+.badge-next { background: #f0eeea; color: var(--ink-3); }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.card { animation: fadeIn 0.4s ease both; }
+.card:nth-child(1) { animation-delay: 0.05s; }
+.card:nth-child(2) { animation-delay: 0.1s; }
+.card:nth-child(3) { animation-delay: 0.15s; }
+.card:nth-child(4) { animation-delay: 0.2s; }
+.card:nth-child(5) { animation-delay: 0.25s; }
+.card:nth-child(6) { animation-delay: 0.3s; }
+
+/* ── SCROLLBAR ── */
+.dashboard::-webkit-scrollbar,
+.modal::-webkit-scrollbar,
+.sidebar::-webkit-scrollbar { width: 5px; }
+.dashboard::-webkit-scrollbar-track,
+.modal::-webkit-scrollbar-track,
+.sidebar::-webkit-scrollbar-track { background: transparent; }
+.dashboard::-webkit-scrollbar-thumb { background: #d0cec8; border-radius: 3px; }
+.modal::-webkit-scrollbar-thumb { background: #d0cec8; border-radius: 3px; }
+.sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 3px; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  body { overflow: auto; }
+  .app { grid-template-columns: 1fr; grid-template-rows: auto 1fr; height: auto; }
+  .sidebar { flex-direction: row; flex-wrap: wrap; padding: 1.2rem; gap: 1rem; }
+  .main { overflow: visible; }
+  .dashboard { grid-template-columns: repeat(2, 1fr); overflow: visible; height: auto; }
+  .card-wide { grid-column: span 2; }
+}
+@media (max-width: 580px) {
+  .dashboard { grid-template-columns: 1fr; }
+  .card-wide { grid-column: span 1; }
+}
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <a href="#" class="nav-logo">Deepak Ray</a>
-  <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#articles">Writing</a></li>
-    <li><a href="#aiml">AI Journey</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-</nav>
+<div class="app">
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar">
+    <div class="profile-photo" onclick="document.getElementById('photo-input').click()" title="Upload photo">
+      <div class="photo-hint"><span>📷</span>Upload<br>photo</div>
+    </div>
+    <input type="file" id="photo-input" accept="image/*" onchange="loadPhoto(event)">
 
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-text">
-    <div class="hero-eyebrow">Manchester, UK · Open to Opportunities</div>
-    <h1>ERP Integration<br>Engineer &amp; <em>AI/ML</em><br>Practitioner</h1>
-    <p class="hero-desc">
-      18+ years architecting enterprise integrations across Workday and PeopleSoft — now progressively augmenting ERP systems with machine learning, RAG pipelines, and autonomous AI agents.
-    </p>
-    <div class="hero-cta">
-      <a href="https://linkedin.com/in/deepakray-erpintegrationconsultant" target="_blank" class="btn btn-primary">
+    <div class="sidebar-name">Deepak Ray</div>
+    <div class="sidebar-title">Workday Software Engineer<br>ERP Integration Specialist<br>AI/ML Practitioner</div>
+    <div class="sidebar-location">Manchester, United Kingdom</div>
+
+    <div class="sidebar-divider"></div>
+
+    <div class="stat-row">
+      <div class="mini-stat">
+        <div class="mini-stat-num">18+</div>
+        <div class="mini-stat-label">Years in Enterprise IT</div>
+      </div>
+      <div class="mini-stat">
+        <div class="mini-stat-num">2</div>
+        <div class="mini-stat-label">ERP Platforms</div>
+      </div>
+      <div class="mini-stat">
+        <div class="mini-stat-num">4</div>
+        <div class="mini-stat-label">Published Articles</div>
+      </div>
+      <div class="mini-stat">
+        <div class="mini-stat-num">50+</div>
+        <div class="mini-stat-label">Servers Automated</div>
+      </div>
+    </div>
+
+    <div class="sidebar-divider"></div>
+
+    <div class="sidebar-section-label">Certifications</div>
+    <ul class="cert-list">
+      <li>Google IT Automation Professional</li>
+      <li>Microsoft Azure Fundamentals</li>
+      <li>Gemini Multimodality & RAG</li>
+      <li>Big Data: Hadoop & Spark</li>
+      <li>Learn with Workday</li>
+    </ul>
+
+    <div class="sidebar-section-label">Connect</div>
+    <div class="sidebar-links">
+      <a href="https://linkedin.com/in/deepakray-erpintegrationconsultant" target="_blank" class="sidebar-link">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
         LinkedIn Profile
       </a>
-      <a href="#contact" class="btn btn-outline">Get in Touch</a>
+      <a href="mailto:deepak4peoplesoft@gmail.com" class="sidebar-link">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        deepak4peoplesoft@gmail.com
+      </a>
     </div>
-  </div>
-  <div class="hero-visual">
-    <div class="photo-wrapper">
-      <div class="photo-circle" onclick="document.getElementById('photo-input').click()" title="Click to upload your photo">
-        <span class="photo-icon">📷</span>
-        <span class="photo-placeholder-text">Click to upload<br>your photo</span>
-      </div>
-      <input type="file" id="photo-input" accept="image/*" onchange="loadPhoto(event)">
+  </aside>
+
+  <!-- ── MAIN ── -->
+  <main class="main">
+    <!-- Top bar -->
+    <div class="topbar">
+      <span class="topbar-greeting">Welcome to <strong>Deepak Ray's</strong> Portfolio</span>
+      <span class="topbar-chip chip-green"><span class="chip-dot"></span>Open to Opportunities</span>
+      <span class="topbar-chip chip-amber"><span class="chip-dot"></span>AI/ML Transition Active</span>
     </div>
-    <div class="hero-stats">
-      <div class="stat-card accent-card">
-        <div class="stat-number">18+</div>
-        <div class="stat-label">Years in Enterprise IT</div>
+
+    <!-- Dashboard grid -->
+    <div class="dashboard">
+
+      <!-- ABOUT — wide dark card -->
+      <div class="card card-wide about-card">
+        <div class="card-label">About Me</div>
+        <div class="card-title">ERP Integration Architect transitioning into <em style="font-style:italic;color:#6dbf96">AI/ML Engineering</em></div>
+        <div class="card-body">18+ years delivering complex enterprise integrations across Workday &amp; PeopleSoft in Finance and Healthcare. Currently a <strong style="color:rgba(255,255,255,0.85)">Workday Software Engineer at Bupa</strong>, while progressively building AI/ML capabilities — shipping production ML models, RAG pipelines, and deep learning architectures alongside a structured 56-week learning roadmap.</div>
       </div>
-      <div class="stat-card">
-        <div class="stat-number">2</div>
-        <div class="stat-label">ERP Platforms: Workday &amp; PeopleSoft</div>
+
+      <!-- SKILLS card -->
+      <div class="card" onclick="openModal('skills')">
+        <div class="card-label">Skills <span class="card-label-icon">⚡</span></div>
+        <div class="card-title">Full-Stack ERP &amp; AI Toolkit</div>
+        <div class="inline-pills">
+          <span class="pill">Workday Studio</span>
+          <span class="pill">EIB / RaaS</span>
+          <span class="pill">Orchestrate</span>
+          <span class="pill">PeopleTools</span>
+          <span class="pill-amber pill">PyTorch</span>
+          <span class="pill-amber pill">XGBoost</span>
+          <span class="pill-amber pill">FastAPI</span>
+          <span class="pill-grey pill">+12 more</span>
+        </div>
+        <div class="card-cta">View full stack <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
       </div>
-      <div class="stat-card">
-        <div class="stat-number">4</div>
-        <div class="stat-label">Published AI/ERP Articles</div>
+
+      <!-- EXPERIENCE card -->
+      <div class="card" onclick="openModal('experience')">
+        <div class="card-label">Experience <span class="card-label-icon">🏢</span></div>
+        <div class="card-title">Bupa · Capgemini · and more</div>
+        <div class="exp-list">
+          <div class="exp-row">
+            <div class="exp-dot-col"><div class="exp-circle"></div><div class="exp-line"></div></div>
+            <div><div class="exp-row-company">Bupa</div><div class="exp-row-role">Workday Software Engineer</div><div class="exp-row-date">Feb 2025 – Present</div></div>
+          </div>
+          <div class="exp-row">
+            <div class="exp-dot-col"><div class="exp-circle" style="background:#d0cec9"></div><div class="exp-line"></div></div>
+            <div><div class="exp-row-company">Capgemini</div><div class="exp-row-role">PeopleSoft Architect / Senior Consultant</div><div class="exp-row-date">2014 – 2025 · 10 yrs</div></div>
+          </div>
+          <div class="exp-row">
+            <div class="exp-dot-col"><div class="exp-circle" style="background:#d0cec9"></div></div>
+            <div><div class="exp-row-company">Hexaware · Cognizant · Patni</div><div class="exp-row-role">Consultant / Analyst</div><div class="exp-row-date">2007 – 2014</div></div>
+          </div>
+        </div>
+        <div class="card-cta">Full history <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
       </div>
-      <div class="stat-card">
-        <div class="stat-number">50+</div>
-        <div class="stat-label">Servers Automated with Python</div>
+
+      <!-- AI JOURNEY card -->
+      <div class="card" onclick="openModal('aiml')">
+        <div class="card-label">AI / ML Journey <span class="card-label-icon">🤖</span></div>
+        <div class="card-title">Building toward AI Engineering</div>
+        <div class="phase-list">
+          <div class="phase-item"><div class="phase-dot dot-done"></div><div><div class="phase-name">Phase 1 — ERP Foundation</div><div class="phase-sub">React · FastAPI · PostgreSQL · AWS · ✓ Live</div></div></div>
+          <div class="phase-item"><div class="phase-dot dot-active"></div><div><div class="phase-name">Phase 2 — ML Augmentation</div><div class="phase-sub">XGBoost · PyTorch ERPClassifier · ⚡ Active</div></div></div>
+          <div class="phase-item"><div class="phase-dot dot-active"></div><div><div class="phase-name">Neural Networks & Deep Learning</div><div class="phase-sub">Training loops · Architectures · ⚡ In Progress</div></div></div>
+          <div class="phase-item"><div class="phase-dot dot-next"></div><div><div class="phase-name">Phase 3 — LSTM Forecasting</div><div class="phase-sub">Financial time-series · AP/AR prediction</div></div></div>
+        </div>
+        <div class="card-cta">Full roadmap <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
       </div>
+
+      <!-- ARTICLES card -->
+      <div class="card card-wide" onclick="openModal('articles')">
+        <div class="card-label">Published Writing <span class="card-label-icon">✍️</span></div>
+        <div class="card-title">AI × ERP Research on LinkedIn</div>
+        <div class="article-list">
+          <div class="article-row"><div class="article-row-chip">New</div><div><div class="article-row-title">Unlocking Semantic Search in PeopleSoft with Oracle 23ai & Google Cloud</div><div class="article-row-date">March 2025</div></div></div>
+          <div class="article-row"><div class="article-row-chip">OCI</div><div><div class="article-row-title">Integrating PeopleSoft with OCI Document Understanding AI Service</div><div class="article-row-date">Sep 2024</div></div></div>
+          <div class="article-row"><div class="article-row-chip">Azure</div><div><div class="article-row-title">Integrating Azure Document AI Intelligence Receipt Model with PeopleSoft</div><div class="article-row-date">Aug 2024</div></div></div>
+          <div class="article-row"><div class="article-row-chip">ODA</div><div><div class="article-row-title">Implementing Chatbots in PeopleSoft FSCM PUM 49 via Oracle Digital Assistant</div><div class="article-row-date">Jan 2024</div></div></div>
+        </div>
+        <div class="card-cta">Read all articles <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+      </div>
+
     </div>
+  </main>
+</div>
+
+<!-- ── MODALS ── -->
+<div class="overlay" id="overlay" onclick="closeModal(event)">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <div class="modal-header-text">
+        <div class="modal-eyebrow" id="modal-eyebrow"></div>
+        <div class="modal-title" id="modal-title"></div>
+      </div>
+      <div class="modal-close" onclick="closeOverlay()">✕</div>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
   </div>
 </div>
 
-<div class="divider"></div>
-
-<!-- ABOUT -->
-<section id="about">
-  <div class="container">
-    <div class="about-grid">
-      <div class="about-text">
-        <div class="section-label">About Me</div>
-        <h2 class="section-title">Where enterprise depth meets<br>AI ambition</h2>
-        <p>I'm a <strong>Senior ERP Consultant and Integration Specialist</strong> with over 18 years of hands-on experience implementing and architecting solutions across Workday HCM/Financials and PeopleSoft FSCM. Currently working as a <strong>Workday Software Engineer at Bupa</strong>, delivering production-grade integrations using Studio, Orchestrate, Core Connectors, EIB, RaaS, and WQL.</p>
-        <p>My background spans cloud migrations (OCI, Azure), DevOps automation, integration refactoring from SOAP to REST, and CI/CD pipelines. I've led teams, managed releases, and been a trusted technical voice across Finance and Healthcare sectors.</p>
-        <p>In parallel, I'm on a deliberate transition into <strong>AI/ML Engineering</strong> — building a production-grade AI-powered ERP system from scratch, publishing research on AI×ERP integrations, and working hands-on with LLMs, vector databases, and deep learning architectures.</p>
-      </div>
-      <div class="about-highlights">
-        <div class="highlight-item">
-          <div class="highlight-icon">🏗️</div>
-          <div class="highlight-text">
-            <h4>Integration Architecture</h4>
-            <p>Designed and delivered complex ERP integrations across cloud and on-premise environments for Healthcare and Finance industries.</p>
-          </div>
-        </div>
-        <div class="highlight-item">
-          <div class="highlight-icon">🤖</div>
-          <div class="highlight-text">
-            <h4>AI/ML Engineering</h4>
-            <p>Building ai-powered-erp from scratch: FastAPI/PostgreSQL with XGBoost, PyTorch, RAG pipelines, and LSTM time-series forecasting.</p>
-          </div>
-        </div>
-        <div class="highlight-item">
-          <div class="highlight-icon">☁️</div>
-          <div class="highlight-text">
-            <h4>Cloud &amp; DevOps</h4>
-            <p>Hands-on OCI, AWS, and Azure — Python automation, Jenkins/Azure DevOps pipelines, and infrastructure scripting across 50+ servers.</p>
-          </div>
-        </div>
-        <div class="highlight-item">
-          <div class="highlight-icon">✍️</div>
-          <div class="highlight-text">
-            <h4>Thought Leadership</h4>
-            <p>Published LinkedIn articles on ODA chatbots, Azure Document Intelligence, OCI Document Understanding, and Oracle 23ai vector search.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- SKILLS -->
-<section id="skills">
-  <div class="container">
-    <div class="section-label">Skills &amp; Tech Stack</div>
-    <h2 class="section-title">A broad toolkit, a deep craft</h2>
-    <p class="section-desc">From ERP internals to ML model deployment — skills developed through real-world delivery across enterprise programmes.</p>
-    <div class="skills-grid">
-      <div class="skill-group">
-        <div class="skill-group-title">Workday</div>
-        <div class="skill-tags">
-          <span class="tag hot">Workday Studio</span>
-          <span class="tag hot">Orchestrate</span>
-          <span class="tag hot">Core Connectors</span>
-          <span class="tag hot">EIB</span>
-          <span class="tag hot">RaaS</span>
-          <span class="tag hot">WQL</span>
-          <span class="tag">HCM Integrations</span>
-          <span class="tag">Financials</span>
-          <span class="tag">XSLT</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <div class="skill-group-title">PeopleSoft</div>
-        <div class="skill-tags">
-          <span class="tag hot">PeopleTools</span>
-          <span class="tag hot">PeopleCode</span>
-          <span class="tag hot">Integration Broker</span>
-          <span class="tag">FSCM (AP/AR/GL)</span>
-          <span class="tag">App Engine</span>
-          <span class="tag">OCI Migration</span>
-          <span class="tag">Oracle DB</span>
-          <span class="tag">BI Publisher</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <div class="skill-group-title">AI / ML</div>
-        <div class="skill-tags">
-          <span class="tag hot">Python</span>
-          <span class="tag hot">PyTorch</span>
-          <span class="tag hot">XGBoost</span>
-          <span class="tag hot">scikit-learn</span>
-          <span class="tag hot">ChromaDB</span>
-          <span class="tag hot">LlamaIndex</span>
-          <span class="tag">LSTM</span>
-          <span class="tag">RAG Pipelines</span>
-          <span class="tag">Sentence Transformers</span>
-          <span class="tag">FastAPI</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <div class="skill-group-title">Cloud &amp; DevOps</div>
-        <div class="skill-tags">
-          <span class="tag hot">AWS (EC2, Free Tier)</span>
-          <span class="tag hot">OCI</span>
-          <span class="tag">Azure DevOps</span>
-          <span class="tag">Azure AI Services</span>
-          <span class="tag">Jenkins</span>
-          <span class="tag">Docker</span>
-          <span class="tag">Python Automation</span>
-          <span class="tag">YAML Pipelines</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <div class="skill-group-title">Data &amp; APIs</div>
-        <div class="skill-tags">
-          <span class="tag hot">REST APIs</span>
-          <span class="tag hot">PostgreSQL</span>
-          <span class="tag">SOAP</span>
-          <span class="tag">JSON / XML</span>
-          <span class="tag">OAuth 2.0</span>
-          <span class="tag">Power BI</span>
-          <span class="tag">Oracle 23ai</span>
-          <span class="tag">Vector Search</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <div class="skill-group-title">Leadership</div>
-        <div class="skill-tags">
-          <span class="tag hot">Team Leadership</span>
-          <span class="tag hot">Release Management</span>
-          <span class="tag">Agile / SCRUM</span>
-          <span class="tag">Technical Consultancy</span>
-          <span class="tag">Stakeholder Management</span>
-          <span class="tag">POC Delivery</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ARTICLES -->
-<section id="articles">
-  <div class="container">
-    <div class="section-label">LinkedIn Articles</div>
-    <h2 class="section-title">Writing at the intersection<br>of ERP &amp; AI</h2>
-    <p class="section-desc">Practical, hands-on guides demonstrating how enterprise ERP systems can leverage modern AI services — with real implementations and working code.</p>
-    <div class="articles-grid">
-      <a href="https://www.linkedin.com/pulse/unlocking-semantic-search-peoplesoft-journey-oracle-23ai-deepak-ray-an0ae/" target="_blank" class="article-card">
-        <div class="article-meta">
-          <span class="article-chip">Latest</span>
-          <span>March 2025</span>
-        </div>
-        <h3>Unlocking Semantic Search in PeopleSoft with Oracle 23ai &amp; Google Cloud</h3>
-        <p>Integrating vector search into PeopleSoft Financials eProcurement using Oracle 23ai as a vector database, Google Cloud Functions, and the Cohere API for embedding generation.</p>
-        <div class="article-arrow">
-          Read article
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </div>
-      </a>
-      <a href="https://www.linkedin.com/pulse/integrating-peoplesoft-oracle-cloud-infrastructure-oci-deepak-ray/" target="_blank" class="article-card">
-        <div class="article-meta">
-          <span class="article-chip">OCI</span>
-          <span>September 2024</span>
-        </div>
-        <h3>Integrating PeopleSoft with OCI Document Understanding AI Service</h3>
-        <p>Achieving receipt data extraction via OCI REST APIs using RSA SHA256 signing, PeopleSoft Encryption Profiles, and PeopleCode — no SDK required.</p>
-        <div class="article-arrow">
-          Read article
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </div>
-      </a>
-      <a href="https://www.linkedin.com/pulse/integrating-microsoft-azure-document-ai-intelligence-receipt-deepak/" target="_blank" class="article-card">
-        <div class="article-meta">
-          <span class="article-chip">Azure</span>
-          <span>August 2024</span>
-        </div>
-        <h3>Integrating Microsoft Azure Document AI Intelligence Receipt Model with PeopleSoft</h3>
-        <p>Step-by-step integration of Azure Document Intelligence's Receipt Model with PeopleSoft, automating receipt data extraction to reduce manual workloads.</p>
-        <div class="article-arrow">
-          Read article
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </div>
-      </a>
-      <a href="https://www.linkedin.com/pulse/implementing-chatbots-peoplesoft-fscm-pum-49-deepak-ray/" target="_blank" class="article-card">
-        <div class="article-meta">
-          <span class="article-chip">Chatbot</span>
-          <span>January 2024</span>
-        </div>
-        <h3>Implementing Chatbots in PeopleSoft FSCM PUM 49 via Oracle Digital Assistant</h3>
-        <p>End-to-end walkthrough of deploying delivered PeopleSoft chatbots using ODA — covering Skills, Channels, proxy user setup, and go-live configuration.</p>
-        <div class="article-arrow">
-          Read article
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </div>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- AI JOURNEY -->
-<section id="aiml">
-  <div class="container">
-    <div class="section-label">AI / ML Learning Journey</div>
-    <h2 class="section-title">Building toward an<br>AI Engineering practice</h2>
-    <p class="section-desc">A structured, deliberate transition — from ERP expert to full-stack AI/ML engineer — grounded in hands-on project work and production deployments.</p>
-    <div class="journey-grid">
-      <div class="journey-card">
-        <div class="journey-phase">Phase 1 · Complete</div>
-        <h3>ai-powered-erp Foundation</h3>
-        <p>Built production-grade ERP system from scratch: React frontend, FastAPI backend, PostgreSQL, JWT authentication, RBAC. Deployed on AWS Free Tier.</p>
-        <span class="journey-status status-done">✓ Live on AWS</span>
-      </div>
-      <div class="journey-card">
-        <div class="journey-phase">Phase 2 · In Progress</div>
-        <h3>ML Augmentation Layer</h3>
-        <p>Adding XGBoost anomaly detection, scikit-learn classifiers, PyTorch ERPClassifier (binary anomaly model) integrated with FastAPI endpoints.</p>
-        <span class="journey-status status-active">⚡ Active</span>
-      </div>
-      <div class="journey-card">
-        <div class="journey-phase">Phase 3 · Planned</div>
-        <h3>LSTM Time-Series Forecasting</h3>
-        <p>Financial time-series prediction for ERP transactions using LSTM networks — deep learning for AP/AR forecasting and anomaly detection.</p>
-        <span class="journey-status status-next">Coming Next</span>
-      </div>
-      <div class="journey-card">
-        <div class="journey-phase">Completed Module</div>
-        <h3>LLM From Scratch</h3>
-        <p>Built web scraper, corpus cleaner, and ChromaDB embedding pipeline on AWS EC2 (Ubuntu 24.04) using sentence-transformers and all-MiniLM-L6-v2.</p>
-        <span class="journey-status status-done">✓ Complete</span>
-      </div>
-      <div class="journey-card">
-        <div class="journey-phase">Module · In Progress</div>
-        <h3>Neural Networks &amp; Deep Learning</h3>
-        <p>Covering single-neuron models, training loops, activation functions, PyTorch ERPClassifier for binary anomaly detection, and CNN/RNN/Transformer architecture families.</p>
-        <span class="journey-status status-active">⚡ In Progress</span>
-      </div>
-    </div>
-    <div class="stack-pills">
-      <span class="stack-pill">Python</span>
-      <span class="stack-pill">PyTorch</span>
-      <span class="stack-pill">XGBoost</span>
-      <span class="stack-pill">scikit-learn</span>
-      <span class="stack-pill">FastAPI</span>
-      <span class="stack-pill">React</span>
-      <span class="stack-pill">PostgreSQL</span>
-      <span class="stack-pill">ChromaDB</span>
-      <span class="stack-pill">LlamaIndex</span>
-      <span class="stack-pill">Ollama</span>
-      <span class="stack-pill">Sentence Transformers</span>
-      <span class="stack-pill">AWS EC2</span>
-      <span class="stack-pill">JupyterLab</span>
-      <span class="stack-pill">Oracle 23ai</span>
-    </div>
-  </div>
-</section>
-
-<!-- EXPERIENCE -->
-<section id="experience">
-  <div class="container">
-    <div class="section-label">Experience</div>
-    <h2 class="section-title">18 years of enterprise delivery</h2>
-    <div class="exp-timeline">
-      <div class="exp-item">
-        <div>
-          <div class="exp-date">Feb 2025 – Present</div>
-          <div class="exp-company">Bupa</div>
-        </div>
-        <div class="exp-content">
-          <h3>Workday Software Engineer</h3>
-          <p>Delivering and maintaining Workday integrations across HCM and Financials for a leading global healthcare company. Building and optimising integrations using Studio, Orchestrate, Core Connectors, EIB, RaaS, and WQL.</p>
-          <div class="exp-tags">
-            <span class="exp-tag">Workday Studio</span>
-            <span class="exp-tag">Orchestrate</span>
-            <span class="exp-tag">EIB</span>
-            <span class="exp-tag">RaaS</span>
-            <span class="exp-tag">WQL</span>
-            <span class="exp-tag">XSLT</span>
-          </div>
-        </div>
-      </div>
-      <div class="exp-item">
-        <div>
-          <div class="exp-date">Jan 2023 – Feb 2025</div>
-          <div class="exp-company">Capgemini</div>
-        </div>
-        <div class="exp-content">
-          <h3>PeopleSoft Architect / Senior Consultant</h3>
-          <p>Led architecture for PeopleSoft migration to Oracle Cloud Infrastructure. Refactored SOAP integrations to REST, implemented SSO, coordinated cross-functional go-lives, and conducted performance optimisation post-migration.</p>
-          <div class="exp-tags">
-            <span class="exp-tag">OCI Migration</span>
-            <span class="exp-tag">PeopleSoft</span>
-            <span class="exp-tag">REST APIs</span>
-            <span class="exp-tag">SSO</span>
-            <span class="exp-tag">Performance Tuning</span>
-          </div>
-        </div>
-      </div>
-      <div class="exp-item">
-        <div>
-          <div class="exp-date">Jun 2014 – Jan 2023</div>
-          <div class="exp-company">Capgemini</div>
-        </div>
-        <div class="exp-content">
-          <h3>Senior Consultant – Oracle PeopleSoft</h3>
-          <p>Single point of contact for PeopleSoft FSCM Technical Support. Led team of 4, automated PeopleTools patching across 50+ servers saving 25% team capacity, implemented Azure DevOps CI/CD, and delivered ODA chatbot and Kibana POCs.</p>
-          <div class="exp-tags">
-            <span class="exp-tag">PeopleSoft FSCM</span>
-            <span class="exp-tag">Azure DevOps</span>
-            <span class="exp-tag">Python Automation</span>
-            <span class="exp-tag">ODA Chatbot</span>
-            <span class="exp-tag">Release Management</span>
-          </div>
-        </div>
-      </div>
-      <div class="exp-item">
-        <div>
-          <div class="exp-date">2007 – 2014</div>
-          <div class="exp-company">Hexaware · Cognizant · Capgemini · Patni</div>
-        </div>
-        <div class="exp-content">
-          <h3>Consultant / System Analyst / Senior Software Engineer</h3>
-          <p>PeopleSoft implementations across HCM, FSCM, and Campus Solutions. ETL strategy, data migration, SOAP/REST integration development, BI Publisher reporting, and workshop delivery.</p>
-          <div class="exp-tags">
-            <span class="exp-tag">PeopleSoft HCM</span>
-            <span class="exp-tag">Campus Solutions</span>
-            <span class="exp-tag">Data Migration</span>
-            <span class="exp-tag">BI Publisher</span>
-            <span class="exp-tag">Integration Development</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section id="contact">
-  <div class="container">
-    <div class="contact-grid">
-      <div>
-        <div class="section-label">Contact</div>
-        <h2 class="section-title">Let's build something<br>together</h2>
-        <p class="contact-intro">
-          Whether you're looking for an experienced Workday Integration Engineer, a PeopleSoft architect, or someone who can bring AI/ML capabilities into your ERP landscape — I'd love to connect.
-        </p>
-        <div class="contact-links">
-          <a href="https://linkedin.com/in/deepakray-erpintegrationconsultant" target="_blank" class="contact-link">
-            <div class="contact-link-icon">💼</div>
-            linkedin.com/in/deepakray-erpintegrationconsultant
-          </a>
-          <a href="mailto:deepakkumarsray2027@gmail.com" class="contact-link">
-            <div class="contact-link-icon">✉️</div>
-            deepakkumarsray2027@gmail.com
-          </a>
-          <a href="#" class="contact-link">
-            <div class="contact-link-icon">📍</div>
-            Manchester Area, United Kingdom
-          </a>
-        </div>
-      </div>
-      <div class="contact-detail">
-        <div class="detail-block">
-          <h4>Education</h4>
-          <p>B.E. Information Technology<br>Biju Patnaik University of Technology, Odisha</p>
-        </div>
-        <div class="detail-block">
-          <h4>Certifications</h4>
-          <div class="certifications">
-            <div class="cert-item">Google IT Automation Professional Certificate</div>
-            <div class="cert-item">Microsoft Certified: Azure Fundamentals</div>
-            <div class="cert-item">Inspect Rich Documents with Gemini Multimodality &amp; Multimodal RAG</div>
-            <div class="cert-item">Big Data Engineering with Hadoop and Spark</div>
-            <div class="cert-item">Learn with Workday</div>
-          </div>
-        </div>
-        <div class="detail-block">
-          <h4>Currently Learning</h4>
-          <p>Deep Learning architectures · LSTM for time-series · Autonomous AI Agents · Production MLOps on AWS</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <p>© 2025 Deepak Ray · Workday Software Engineer &amp; AI/ML Practitioner · Manchester, UK · Built with care</p>
-</footer>
-
 <script>
-  function loadPhoto(event) {
-    const file = event.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      const circle = document.querySelector('.photo-circle');
-      // Remove placeholder text and icon
-      circle.querySelector('.photo-icon').style.display = 'none';
-      circle.querySelector('.photo-placeholder-text').style.display = 'none';
-      // Insert or update image
-      let img = circle.querySelector('img');
-      if (!img) {
-        img = document.createElement('img');
-        circle.appendChild(img);
-      }
-      img.src = e.target.result;
-      circle.style.border = '3px solid var(--accent)';
-    };
-    reader.readAsDataURL(file);
+function loadPhoto(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const ph = document.querySelector('.profile-photo');
+    ph.querySelector('.photo-hint').style.display = 'none';
+    let img = ph.querySelector('img');
+    if (!img) { img = document.createElement('img'); ph.appendChild(img); }
+    img.src = e.target.result;
+    ph.style.border = '2.5px solid rgba(255,255,255,0.7)';
+  };
+  reader.readAsDataURL(file);
+}
+
+const content = {
+  skills: {
+    eyebrow: 'Skills & Tech Stack',
+    title: 'A full-stack ERP & AI toolkit',
+    html: `
+      <p>Skills built over 18 years of real-world delivery — from deep ERP internals to modern ML model deployment on cloud infrastructure.</p>
+      <div class="modal-skill-grid">
+        <div class="modal-skill-block">
+          <h4>Workday</h4>
+          <div class="modal-pills">
+            ${['Workday Studio','Orchestrate','Core Connectors','EIB','RaaS','WQL','XSLT','HCM Integrations','Financials'].map(t=>`<span class="pill">${t}</span>`).join('')}
+          </div>
+        </div>
+        <div class="modal-skill-block">
+          <h4>PeopleSoft</h4>
+          <div class="modal-pills">
+            ${['PeopleTools','PeopleCode','Integration Broker','FSCM (AP/AR/GL)','App Engine','OCI Migration','Oracle DB','BI Publisher'].map(t=>`<span class="pill">${t}</span>`).join('')}
+          </div>
+        </div>
+        <div class="modal-skill-block">
+          <h4>AI / ML</h4>
+          <div class="modal-pills">
+            ${['Python','PyTorch','XGBoost','scikit-learn','ChromaDB','LlamaIndex','LSTM','RAG Pipelines','Sentence Transformers','FastAPI'].map(t=>`<span class="pill pill-amber">${t}</span>`).join('')}
+          </div>
+        </div>
+        <div class="modal-skill-block">
+          <h4>Cloud & DevOps</h4>
+          <div class="modal-pills">
+            ${['AWS EC2','OCI','Azure DevOps','Azure AI Services','Jenkins','Docker','Python Automation','YAML Pipelines'].map(t=>`<span class="pill pill-grey">${t}</span>`).join('')}
+          </div>
+        </div>
+        <div class="modal-skill-block">
+          <h4>Data & APIs</h4>
+          <div class="modal-pills">
+            ${['REST APIs','PostgreSQL','SOAP','JSON/XML','OAuth 2.0','Power BI','Oracle 23ai','Vector Search'].map(t=>`<span class="pill pill-grey">${t}</span>`).join('')}
+          </div>
+        </div>
+        <div class="modal-skill-block">
+          <h4>Leadership</h4>
+          <div class="modal-pills">
+            ${['Team Leadership','Release Management','Agile/SCRUM','Technical Consultancy','Stakeholder Mgmt','POC Delivery'].map(t=>`<span class="pill pill-grey">${t}</span>`).join('')}
+          </div>
+        </div>
+      </div>
+      <h3>Currently Deepening</h3>
+      <div class="modal-pills" style="margin-top:0.5rem">
+        ${['Deep Learning Architectures','LSTM for Time-Series','Autonomous AI Agents','Production MLOps on AWS'].map(t=>`<span class="pill pill-amber">${t}</span>`).join('')}
+      </div>
+    `
+  },
+  experience: {
+    eyebrow: 'Work Experience',
+    title: '18 years of enterprise delivery',
+    html: `
+      <div class="modal-exp-item">
+        <div class="modal-exp-top">
+          <div><div class="modal-exp-co">Bupa</div><div class="modal-exp-role">Workday Software Engineer</div></div>
+          <div class="modal-exp-date">Feb 2025 – Present</div>
+        </div>
+        <p class="modal-exp-desc">Delivering and maintaining Workday integrations across HCM and Financials for a leading global healthcare company. Building optimised integrations using Studio, Orchestrate, Core Connectors, EIB, RaaS, and WQL.</p>
+        <div class="modal-pills">${['Workday Studio','Orchestrate','EIB','RaaS','WQL','XSLT'].map(t=>`<span class="pill">${t}</span>`).join('')}</div>
+      </div>
+      <div class="modal-exp-item">
+        <div class="modal-exp-top">
+          <div><div class="modal-exp-co">Capgemini</div><div class="modal-exp-role">PeopleSoft Architect</div></div>
+          <div class="modal-exp-date">Jan 2023 – Feb 2025</div>
+        </div>
+        <p class="modal-exp-desc">Led architecture for PeopleSoft migration to Oracle Cloud Infrastructure. Refactored SOAP integrations to REST, implemented SSO, coordinated cross-functional go-lives, and conducted performance optimisation post-migration.</p>
+        <div class="modal-pills">${['OCI Migration','REST APIs','SSO','Performance Tuning','Architecture Design'].map(t=>`<span class="pill">${t}</span>`).join('')}</div>
+      </div>
+      <div class="modal-exp-item">
+        <div class="modal-exp-top">
+          <div><div class="modal-exp-co">Capgemini</div><div class="modal-exp-role">Senior Consultant — Oracle PeopleSoft</div></div>
+          <div class="modal-exp-date">Jun 2014 – Jan 2023 · 8.5 yrs</div>
+        </div>
+        <p class="modal-exp-desc">Single point of contact for PeopleSoft FSCM Technical Support. Led a team of 4, automated PeopleTools patching across 50+ servers (saving 25% team capacity), implemented Azure DevOps CI/CD, and delivered ODA chatbot and Kibana dashboard POCs.</p>
+        <div class="modal-pills">${['PeopleSoft FSCM','Azure DevOps','Python Automation','ODA Chatbot','Release Management','Team Leadership'].map(t=>`<span class="pill">${t}</span>`).join('')}</div>
+      </div>
+      <div class="modal-exp-item">
+        <div class="modal-exp-top">
+          <div><div class="modal-exp-co">Hexaware · Cognizant · Capgemini · Patni</div><div class="modal-exp-role">Consultant / System Analyst / Senior Engineer</div></div>
+          <div class="modal-exp-date">2007 – 2014</div>
+        </div>
+        <p class="modal-exp-desc">PeopleSoft implementations across HCM, FSCM, and Campus Solutions. ETL strategy, data migration, SOAP/REST integration development, BI Publisher reporting, and workshop delivery with business stakeholders.</p>
+        <div class="modal-pills">${['PeopleSoft HCM','Campus Solutions','Data Migration','BI Publisher','Integration Dev'].map(t=>`<span class="pill pill-grey">${t}</span>`).join('')}</div>
+      </div>
+      <h3>Education</h3>
+      <p><strong>B.E. Information Technology</strong> — Biju Patnaik University of Technology, Odisha (2001–2005)</p>
+    `
+  },
+  aiml: {
+    eyebrow: 'AI / ML Learning Journey',
+    title: 'Building toward an AI Engineering practice',
+    html: `
+      <p>A structured, deliberate 56-week transition from senior ERP consulting into AI/ML engineering — grounded in hands-on project work and real deployments on AWS.</p>
+      <div class="modal-journey-card">
+        <div class="modal-journey-left"><div class="modal-journey-dot dot-done" style="background:#1a5c3e"></div><div class="modal-journey-line"></div></div>
+        <div class="modal-journey-right">
+          <div class="modal-journey-phase">Phase 1 · Complete</div>
+          <div class="modal-journey-title">ai-powered-erp Foundation</div>
+          <div class="modal-journey-desc">Built production-grade ERP system from scratch: React frontend, FastAPI backend, PostgreSQL, JWT authentication, and RBAC. Deployed live on AWS Free Tier (EC2 t2.micro).</div>
+          <span class="modal-journey-badge badge-done">✓ Live on AWS</span>
+        </div>
+      </div>
+      <div class="modal-journey-card">
+        <div class="modal-journey-left"><div class="modal-journey-dot dot-active" style="background:#b85c00"></div><div class="modal-journey-line"></div></div>
+        <div class="modal-journey-right">
+          <div class="modal-journey-phase">Phase 2 · In Progress</div>
+          <div class="modal-journey-title">ML Augmentation Layer</div>
+          <div class="modal-journey-desc">Adding XGBoost anomaly detection, scikit-learn classifiers, and a PyTorch ERPClassifier (binary anomaly detection model) integrated into FastAPI endpoints.</div>
+          <span class="modal-journey-badge badge-active">⚡ Active</span>
+        </div>
+      </div>
+      <div class="modal-journey-card">
+        <div class="modal-journey-left"><div class="modal-journey-dot dot-active" style="background:#b85c00"></div><div class="modal-journey-line"></div></div>
+        <div class="modal-journey-right">
+          <div class="modal-journey-phase">Module · In Progress</div>
+          <div class="modal-journey-title">Neural Networks & Deep Learning</div>
+          <div class="modal-journey-desc">Covering single-neuron models, training loops, activation functions (ReLU/Sigmoid/Tanh), PyTorch ERPClassifier architecture, and deep learning families: CNNs, RNNs, and Transformers.</div>
+          <span class="modal-journey-badge badge-active">⚡ In Progress</span>
+        </div>
+      </div>
+      <div class="modal-journey-card">
+        <div class="modal-journey-left"><div class="modal-journey-dot" style="background:#d0cec9"></div><div class="modal-journey-line"></div></div>
+        <div class="modal-journey-right">
+          <div class="modal-journey-phase">Phase 3 · Planned</div>
+          <div class="modal-journey-title">LSTM Time-Series Forecasting</div>
+          <div class="modal-journey-desc">Financial time-series prediction for ERP transactions using LSTM networks — deep learning for AP/AR forecasting and anomaly detection over time.</div>
+          <span class="modal-journey-badge badge-next">Coming Next</span>
+        </div>
+      </div>
+      <div class="modal-journey-card">
+        <div class="modal-journey-left"><div class="modal-journey-dot dot-done" style="background:#1a5c3e"></div></div>
+        <div class="modal-journey-right">
+          <div class="modal-journey-phase">Completed Module</div>
+          <div class="modal-journey-title">LLM From Scratch</div>
+          <div class="modal-journey-desc">Built a web scraper, corpus cleaner, and ChromaDB embedding pipeline on AWS EC2 (Ubuntu 24.04) using <code>all-MiniLM-L6-v2</code> sentence-transformers, stored at <code>~/llm-project/</code>.</div>
+          <span class="modal-journey-badge badge-done">✓ Complete</span>
+        </div>
+      </div>
+      <h3>Full Stack in Use</h3>
+      <div class="modal-pills" style="margin-top:0.5rem">
+        ${['Python','PyTorch','XGBoost','scikit-learn','FastAPI','React','PostgreSQL','ChromaDB','LlamaIndex','Sentence Transformers','AWS EC2','JupyterLab','Oracle 23ai'].map(t=>`<span class="pill pill-amber">${t}</span>`).join('')}
+      </div>
+    `
+  },
+  articles: {
+    eyebrow: 'Published Writing',
+    title: 'AI × ERP Research on LinkedIn',
+    html: `
+      <p>Practical, hands-on articles demonstrating how enterprise ERP systems can leverage modern AI services — with real implementations, working PeopleCode, and full step-by-step guides.</p>
+      <a href="https://www.linkedin.com/pulse/unlocking-semantic-search-peoplesoft-journey-oracle-23ai-deepak-ray-an0ae/" target="_blank" class="modal-article">
+        <div class="modal-article-date">March 2025 · Vector Search</div>
+        <div class="modal-article-title">Unlocking Semantic Search in PeopleSoft with Oracle 23ai & Google Cloud</div>
+        <div class="modal-article-desc">Integrating vector search into PeopleSoft Financials eProcurement using Oracle 23ai as a vector database, Google Cloud Functions, and the Cohere API for embedding generation. Full PeopleCode and Python Cloud Functions included.</div>
+      </a>
+      <a href="https://www.linkedin.com/pulse/integrating-peoplesoft-oracle-cloud-infrastructure-oci-deepak-ray/" target="_blank" class="modal-article">
+        <div class="modal-article-date">September 2024 · OCI AI Services</div>
+        <div class="modal-article-title">Integrating PeopleSoft with OCI Document Understanding AI Service</div>
+        <div class="modal-article-desc">Achieving receipt data extraction via OCI REST APIs — with RSA SHA256 signing, PeopleSoft Encryption Profiles, and PeopleCode. No Oracle SDK required; a pure integration approach.</div>
+      </a>
+      <a href="https://www.linkedin.com/pulse/integrating-microsoft-azure-document-ai-intelligence-receipt-deepak/" target="_blank" class="modal-article">
+        <div class="modal-article-date">August 2024 · Azure AI</div>
+        <div class="modal-article-title">Integrating Microsoft Azure Document AI Intelligence Receipt Model with PeopleSoft</div>
+        <div class="modal-article-desc">Step-by-step integration of Azure Document Intelligence's Receipt Model. Automates receipt data extraction to reduce manual workloads and streamline financial processes in PeopleSoft.</div>
+      </a>
+      <a href="https://www.linkedin.com/pulse/implementing-chatbots-peoplesoft-fscm-pum-49-deepak-ray/" target="_blank" class="modal-article">
+        <div class="modal-article-date">January 2024 · Oracle Digital Assistant</div>
+        <div class="modal-article-title">Implementing Chatbots in PeopleSoft FSCM PUM 49 via Oracle Digital Assistant</div>
+        <div class="modal-article-desc">End-to-end walkthrough of deploying delivered PeopleSoft chatbots using ODA — covering Skills store, Channel creation, proxy user setup, and go-live homepage tile configuration.</div>
+      </a>
+    `
   }
+};
+
+function openModal(key) {
+  const d = content[key];
+  document.getElementById('modal-eyebrow').textContent = d.eyebrow;
+  document.getElementById('modal-title').textContent = d.title;
+  document.getElementById('modal-body').innerHTML = d.html;
+  document.getElementById('overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeOverlay() {
+  document.getElementById('overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('overlay')) closeOverlay();
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeOverlay(); });
 </script>
 </body>
 </html>
